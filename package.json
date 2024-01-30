@@ -8,6 +8,7 @@
     "packages/*"
   ],
   "scripts": {
-    "start:server": "cd packages/server && node app.js"
+    "start:server": "cd packages/server && node app.js",
+    "start:client": "cd packages/client && yarn start"
   }
 }
