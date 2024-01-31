@@ -43,15 +43,17 @@ const resolvers = {
 
 async function startServer() {
   const app = express();
-  const server = new ApolloServer({ typeDefs, resolvers });
+  const aplloServer = new ApolloServer({ typeDefs, resolvers });
 
-  await server.start();
-  server.applyMiddleware({ app });
+  await aplloServer.start();
+  aplloServer.applyMiddleware({ app });
 
   mongoose.connect("mongodb://127.0.0.1:27017/graphqlTodos");
 
   app.listen({ port: 4000 }, () =>
-    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+    console.log(
+      `🚀 Server ready at http://localhost:4000${aplloServer.graphqlPath}`
+    )
   );
 }
 
