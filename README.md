@@ -19,8 +19,6 @@ yarn start:client
 
 ## Takeaways
 
-![KakaoTalk_20240131_133922967](https://github.com/jiheon788/graphql-todos-monorepo/assets/90181028/a3cbe665-acb2-462f-a1ae-a2511dd5890f)
-
 #### DB 스키마 (Database Schema):
 
 데이터베이스 내에서 데이터가 물리적으로 어떻게 저장되고 조직되는지에 대한 구조를 정의합니다.
@@ -40,3 +38,15 @@ yarn start:client
 
 클라이언트가 서버에 어떤 데이터를 요청하거나 어떤 작업을 수행하도록 요청하는 것을 정의합니다.
 필요한 데이터의 정확한 필드와 타입을 명시하여 요청합니다.
+
+---
+
+<details>
+<summary>Note-taking 2024.01.31</summary>
+<div markdown="1">
+
+![KakaoTalk_20240131_133922967](https://github.com/jiheon788/graphql-todos-monorepo/assets/90181028/a3cbe665-acb2-462f-a1ae-a2511dd5890f)
+
+</div>
+</details>
+
