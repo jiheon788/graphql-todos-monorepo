@@ -51,10 +51,20 @@ yarn start:client
 ---
 
 <details>
-<summary>Note-taking 2024.01.31</summary>
+<summary>Note-taking 2024.01.31: GraphQl Overviwe</summary>
 <div markdown="1">
 
 ![KakaoTalk_20240131_133922967](https://github.com/jiheon788/graphql-todos-monorepo/assets/90181028/a3cbe665-acb2-462f-a1ae-a2511dd5890f)
 
 </div>
 </details>
+
+<details>
+<summary>Note-taking 2024.02.01: Optimistic Update</summary>
+<div markdown="2">
+
+![image](https://github.com/jiheon788/graphql-todos-monorepo/assets/90181028/9f364511-301b-4ae0-8aad-6e7409d03b50)
+
+</div>
+</details>
+
