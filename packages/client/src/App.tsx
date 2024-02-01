@@ -24,11 +24,22 @@ const ADD_TODO = gql`
   }
 `;
 
+const TOGGLE_TODO = gql`
+  mutation ToggleTodo($id: ID!) {
+    toggleTodo(id: $id) {
+      id
+      text
+      completed
+    }
+  }
+`;
+
 interface TodoType {
   todos: {
     id: string;
     text: string;
     completed: boolean;
+    __typename: string;
   }[];
 }
 
@@ -36,6 +47,7 @@ function App() {
   const [value, setValue] = useState("");
 
   const { loading, error, data } = useQuery<TodoType>(GET_TODOS);
+
   const [addTodo] = useMutation(ADD_TODO, {
     /**
      * 낙관적 업데이트는 서버 응답이 성공할 것이라고 "낙관적"으로 가정하고, 그에 따라 UI를 미리 업데이트
@@ -57,15 +69,34 @@ function App() {
      */
     update: (cache, { data: { addTodo } }) => {
       // 캐시에서 현재의 todos 쿼리 결과를 가져옵니다.
-      const _data = cache.readQuery<{ todos: TodoType[] }>({
-        query: GET_TODOS,
-      });
+      const currentData = cache.readQuery<TodoType>({ query: GET_TODOS });
 
       // 새로운 todo를 todos 배열에 추가
-      cache.writeQuery({
-        query: GET_TODOS,
-        data: { todos: [addTodo, ...(_data?.todos ?? [])] },
-      });
+      if (currentData) {
+        cache.writeQuery({
+          query: GET_TODOS,
+          data: { todos: [addTodo, ...currentData.todos] },
+        });
+      }
+    },
+  });
+
+  const [toggleTodo] = useMutation(TOGGLE_TODO, {
+    update: (cache, { data: { toggleTodo } }) => {
+      const currentData = cache.readQuery<TodoType>({ query: GET_TODOS });
+
+      if (currentData && currentData.todos) {
+        const updatedData = currentData.todos.map((todo) => {
+          return todo.id === toggleTodo.id
+            ? { ...todo, completed: toggleTodo.completed }
+            : todo;
+        });
+
+        cache.writeQuery({
+          query: GET_TODOS,
+          data: { todos: updatedData },
+        });
+      }
     },
   });
 
@@ -89,12 +120,25 @@ function App() {
         >
           Add Todo
         </button>
-        <ul>
+        <ul
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "flex-start",
+          }}
+        >
           {data &&
             data.todos.map((todo) => (
-              <li key={todo.id}>
+              <li key={todo.id} style={{ listStyle: "none" }}>
                 <div>
-                  <input type="checkbox" defaultChecked={todo.completed} />
+                  <input
+                    type="checkbox"
+                    defaultChecked={todo.completed}
+                    onClick={() => {
+                      toggleTodo({ variables: { id: todo.id } });
+                    }}
+                  />
                   <label>{todo.text}</label>
                 </div>
               </li>
